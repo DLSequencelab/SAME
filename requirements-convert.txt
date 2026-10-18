@@ -1,0 +1,2 @@
+-r requirements.txt
+sktime>=0.26

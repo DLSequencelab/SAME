@@ -1,0 +1,261 @@
+{
+  "release": "SAME_Paper_Code_20261018",
+  "checked_on": "2026-10-18",
+  "scope": "Manuscript four-branch full model, UEA data conversion, training and final-only TEST evaluation",
+  "environment": {
+    "python_environment": "Existing local PyTorch CPU environment",
+    "torch": "2.14.0+cpu",
+    "numpy": "2.4.6"
+  },
+  "tests": {
+    "command": "python -m unittest discover -s tests -v",
+    "count": 13,
+    "status": "passed",
+    "runtime_seconds": 9.358,
+    "coverage": [
+      "Additive reconstruction and weight normalization",
+      "Masked NaN padding and extended padding invariance",
+      "Cosine classifier and factorized tokenizer backward pass",
+      "Finite gradients and branch loss schedule",
+      "Short-sample spectral availability",
+      "All 18 model recipes",
+      "Original split and TRAIN-only label mapping",
+      "TRAIN CE patience and improvement threshold",
+      "ACC and macro-F1",
+      "Existing output directory protection",
+      "Maximum-epoch final evaluation",
+      "Controlled early stopping with stopping-epoch retention",
+      "Checkpoint saved before exactly one TEST evaluation",
+      "Checkpoint replay",
+      "CLI preflight and end-to-end CPU training/summaries"
+    ]
+  },
+  "legacy_equivalence": {
+    "status": "passed",
+    "device": "cpu",
+    "inputs": "Small random tensors, three samples and three classes; 49 positions, variable valid lengths, masked NaNs. Channels alternate between 3 and 20 across configuration profiles. These are unit fixtures, not the actual UEA datasets.",
+    "comparisons": [
+      "Initialization and state_dict keys",
+      "Evaluation logits and signed contributions",
+      "Dropout-controlled training logits and loss",
+      "Parameter gradients"
+    ],
+    "datasets": [
+      {
+        "dataset": "ArticularyWordRecognition",
+        "fixture_channels": 3,
+        "logit_max_abs_error": 0,
+        "training_loss_abs_error": 0,
+        "gradient_max_abs_error": 0
+      },
+      {
+        "dataset": "BasicMotions",
+        "fixture_channels": 20,
+        "logit_max_abs_error": 0,
+        "training_loss_abs_error": 0,
+        "gradient_max_abs_error": 0
+      },
+      {
+        "dataset": "CharacterTrajectories",
+        "fixture_channels": 3,
+        "logit_max_abs_error": 0,
+        "training_loss_abs_error": 0,
+        "gradient_max_abs_error": 0
+      },
+      {
+        "dataset": "Cricket",
+        "fixture_channels": 20,
+        "logit_max_abs_error": 0,
+        "training_loss_abs_error": 0,
+        "gradient_max_abs_error": 0
+      },
+      {
+        "dataset": "DuckDuckGeese",
+        "fixture_channels": 3,
+        "logit_max_abs_error": 0,
+        "training_loss_abs_error": 0,
+        "gradient_max_abs_error": 0
+      },
+      {
+        "dataset": "FaceDetection",
+        "fixture_channels": 20,
+        "logit_max_abs_error": 0,
+        "training_loss_abs_error": 0,
+        "gradient_max_abs_error": 0
+      },
+      {
+        "dataset": "FingerMovements",
+        "fixture_channels": 3,
+        "logit_max_abs_error": 0,
+        "training_loss_abs_error": 0,
+        "gradient_max_abs_error": 0
+      },
+      {
+        "dataset": "Heartbeat",
+        "fixture_channels": 20,
+        "logit_max_abs_error": 0,
+        "training_loss_abs_error": 0,
+        "gradient_max_abs_error": 0
+      },
+      {
+        "dataset": "InsectWingbeat",
+        "fixture_channels": 3,
+        "logit_max_abs_error": 0,
+        "training_loss_abs_error": 0,
+        "gradient_max_abs_error": 0
+      },
+      {
+        "dataset": "JapaneseVowels",
+        "fixture_channels": 20,
+        "logit_max_abs_error": 0,
+        "training_loss_abs_error": 0,
+        "gradient_max_abs_error": 0
+      },
+      {
+        "dataset": "NATOPS",
+        "fixture_channels": 3,
+        "logit_max_abs_error": 0,
+        "training_loss_abs_error": 0,
+        "gradient_max_abs_error": 0
+      },
+      {
+        "dataset": "PEMS-SF",
+        "fixture_channels": 20,
+        "logit_max_abs_error": 0,
+        "training_loss_abs_error": 0,
+        "gradient_max_abs_error": 0
+      },
+      {
+        "dataset": "PenDigits",
+        "fixture_channels": 3,
+        "logit_max_abs_error": 0,
+        "training_loss_abs_error": 0,
+        "gradient_max_abs_error": 0
+      },
+      {
+        "dataset": "RacketSports",
+        "fixture_channels": 20,
+        "logit_max_abs_error": 0,
+        "training_loss_abs_error": 0,
+        "gradient_max_abs_error": 0
+      },
+      {
+        "dataset": "SelfRegulationSCP2",
+        "fixture_channels": 3,
+        "logit_max_abs_error": 0,
+        "training_loss_abs_error": 0,
+        "gradient_max_abs_error": 0
+      },
+      {
+        "dataset": "SpokenArabicDigits",
+        "fixture_channels": 20,
+        "logit_max_abs_error": 0,
+        "training_loss_abs_error": 0,
+        "gradient_max_abs_error": 0
+      },
+      {
+        "dataset": "StandWalkJump",
+        "fixture_channels": 3,
+        "logit_max_abs_error": 0,
+        "training_loss_abs_error": 0,
+        "gradient_max_abs_error": 0
+      },
+      {
+        "dataset": "UWaveGestureLibrary",
+        "fixture_channels": 20,
+        "logit_max_abs_error": 0,
+        "training_loss_abs_error": 0,
+        "gradient_max_abs_error": 0
+      }
+    ],
+    "additional_cosine_case": "passed with exact evaluation-logit equality"
+  },
+  "training_protocol": {
+    "full_official_train": true,
+    "early_stop_monitor": "sample_weighted_online_train_ce",
+    "default_max_epochs": 100,
+    "default_patience": 20,
+    "default_min_delta": 0,
+    "last_trained_epoch_retained": true,
+    "checkpoint_saved_before_test": true,
+    "test_inference_passes_per_successful_run": 1,
+    "test_used_for_checkpoint_selection": false,
+    "restore_best": false
+  },
+  "packaging": {
+    "english_source_scan": "No Chinese text found in packaged source, comments, docstrings, configuration or README",
+    "excluded": [
+      "Other experiment scripts",
+      "Paper figures and manuscripts",
+      "Raw data",
+      "Historical metrics",
+      "Checkpoints",
+      "Python caches",
+      "Virtual environments"
+    ]
+  },
+  "limitations": {
+    "cuda_tested": false,
+    "real_dataset_training_rerun": false,
+    "ts_conversion_executed": false,
+    "historical_manuscript_metrics_reproduced": false
+  },
+  "source_fingerprints": {
+    "release": [
+      {
+        "file": ".gitignore",
+        "sha256": "38a2074f24ab809047f5d9b55e1e59b0399348ca1d8dd2cf2080a1e05a8e0733"
+      },
+      {
+        "file": "convert_uea_ts.py",
+        "sha256": "da4121e2358423e6eb4ea0e3d95fef928c91cd70f9f5d3f1904644f0e4b19af0"
+      },
+      {
+        "file": "README.md",
+        "sha256": "72177792b3a986a4afb832ba98174dfd0a3030193f49fbca3bad81342cdb0b8b"
+      },
+      {
+        "file": "requirements-convert.txt",
+        "sha256": "5609739a63c4ce78e540e2242233474f4121dc455d6ad0893974656592a15a82"
+      },
+      {
+        "file": "requirements.txt",
+        "sha256": "ad988618f5fbe4348e96e0219b18e19743d9ac0d01baebc6bd652e280a5db548"
+      },
+      {
+        "file": "train.py",
+        "sha256": "b3d84a4ed65e85d392e4278152572e7e17f4cf5da24fc6d494449bc4f40e40c6"
+      },
+      {
+        "file": "configs/uea18.json",
+        "sha256": "8b963f8eb21f6f9ed979920a403d0e2589e027f9c8bb129ffa81a194cd6b5657"
+      },
+      {
+        "file": "same/__init__.py",
+        "sha256": "43b6307fad84fa0c5325d72cb3d4f8d75eeef3c35ecd44d831ac4911be2c9974"
+      },
+      {
+        "file": "same/model.py",
+        "sha256": "6a665676d1120131bac3d62ba284865e68381ea1221381dc40b66239b750dae4"
+      },
+      {
+        "file": "tests/test_release.py",
+        "sha256": "876e713af7941616bd3b03a1323d9388491862c844d2364fcb0c1c0dc61bb7c6"
+      }
+    ],
+    "legacy": [
+      {
+        "file": "d4_moe/model.py",
+        "sha256": "46dac8cb4c2cbc907ea6e8f2b388434f7a2e0c958b8f9ceecf9d81aabbf36323"
+      },
+      {
+        "file": "run_uea_train_val_test.py",
+        "sha256": "70042f115256f22f84b5ff649e8fa3c8ae1e5d5bf67a82f5c05aa16ff5fcebec"
+      },
+      {
+        "file": "configs/uea18.json",
+        "sha256": "136984b407e1b4fc0223b41de1f948321ea520e21f66ab9031988443c0fdd32d"
+      }
+    ]
+  }
+}
