@@ -1,5 +1,308 @@
 {
   "release": "SAME_Paper_Code_20261018",
+  "configuration_update": {
+    "checked_on": "2026-10-18",
+    "sources": [
+      "uea18.json",
+      "lamost.json"
+    ],
+    "scope": "Configuration compatibility and CPU fixtures, not real UEA/LAMOST performance or CUDA validation",
+    "supported_hyperparameters_preserved": true,
+    "protocol": {
+      "supplied": "paper_test",
+      "release": "official_train_ce_earlystop_final_test",
+      "selection": "TRAIN CE early stopping; last trained epoch; one final TEST evaluation"
+    },
+    "removed_legacy_fields": {
+      "uea18": [
+        {
+          "section": "defaults",
+          "kind": "model",
+          "key": "top_k",
+          "value": 2
+        },
+        {
+          "section": "defaults",
+          "kind": "model",
+          "key": "reliability_floor",
+          "value": 0.5
+        },
+        {
+          "section": "defaults",
+          "kind": "model",
+          "key": "orth_weight",
+          "value": 0
+        },
+        {
+          "section": "defaults",
+          "kind": "model",
+          "key": "balance_weight",
+          "value": 0
+        },
+        {
+          "section": "defaults",
+          "kind": "model",
+          "key": "classification_margin",
+          "value": 0
+        },
+        {
+          "section": "defaults",
+          "kind": "model",
+          "key": "routing_mode",
+          "value": "soft"
+        },
+        {
+          "section": "defaults",
+          "kind": "model",
+          "key": "orth_margin",
+          "value": 0.2
+        },
+        {
+          "section": "defaults",
+          "kind": "model",
+          "key": "anchor_min_mass",
+          "value": 0.1
+        },
+        {
+          "section": "defaults",
+          "kind": "model",
+          "key": "anchor_min_patches",
+          "value": 2
+        },
+        {
+          "section": "defaults",
+          "kind": "model",
+          "key": "reliability_gamma",
+          "value": 0
+        },
+        {
+          "section": "defaults",
+          "kind": "model",
+          "key": "reliability_temperature",
+          "value": 1
+        },
+        {
+          "section": "defaults",
+          "kind": "training",
+          "key": "split_seed",
+          "value": null
+        },
+        {
+          "section": "defaults",
+          "kind": "training",
+          "key": "validation_ratio",
+          "value": 0.2
+        },
+        {
+          "section": "defaults",
+          "kind": "training",
+          "key": "explain_samples",
+          "value": 16
+        }
+      ],
+      "lamost": [
+        {
+          "section": "defaults",
+          "kind": "model",
+          "key": "routing_mode",
+          "value": "soft"
+        },
+        {
+          "section": "defaults",
+          "kind": "model",
+          "key": "reliability_gamma",
+          "value": 0
+        },
+        {
+          "section": "defaults",
+          "kind": "training",
+          "key": "split_seed",
+          "value": null
+        },
+        {
+          "section": "defaults",
+          "kind": "training",
+          "key": "validation_ratio",
+          "value": 0.2
+        },
+        {
+          "section": "defaults",
+          "kind": "training",
+          "key": "explain_samples",
+          "value": 16
+        }
+      ]
+    },
+    "tests": {
+      "command": "python -m unittest discover -s tests -v",
+      "count": 14,
+      "status": "passed",
+      "runtime_seconds": 12.498
+    },
+    "configuration_equivalence": {
+      "status": "passed",
+      "device": "cpu",
+      "torch": "2.14.0+cpu",
+      "numpy": "2.4.6",
+      "cosine_parity": true,
+      "datasets": [
+        {
+          "dataset": "ArticularyWordRecognition",
+          "channels": 3,
+          "logit_max_abs_error": 0,
+          "training_loss_abs_error": 0,
+          "gradient_max_abs_error": 0,
+          "state_dict_keys_and_initialization_identical": true
+        },
+        {
+          "dataset": "BasicMotions",
+          "channels": 20,
+          "logit_max_abs_error": 0,
+          "training_loss_abs_error": 0,
+          "gradient_max_abs_error": 0,
+          "state_dict_keys_and_initialization_identical": true
+        },
+        {
+          "dataset": "CharacterTrajectories",
+          "channels": 3,
+          "logit_max_abs_error": 0,
+          "training_loss_abs_error": 0,
+          "gradient_max_abs_error": 0,
+          "state_dict_keys_and_initialization_identical": true
+        },
+        {
+          "dataset": "Cricket",
+          "channels": 20,
+          "logit_max_abs_error": 0,
+          "training_loss_abs_error": 0,
+          "gradient_max_abs_error": 0,
+          "state_dict_keys_and_initialization_identical": true
+        },
+        {
+          "dataset": "DuckDuckGeese",
+          "channels": 3,
+          "logit_max_abs_error": 0,
+          "training_loss_abs_error": 0,
+          "gradient_max_abs_error": 0,
+          "state_dict_keys_and_initialization_identical": true
+        },
+        {
+          "dataset": "FaceDetection",
+          "channels": 20,
+          "logit_max_abs_error": 0,
+          "training_loss_abs_error": 0,
+          "gradient_max_abs_error": 0,
+          "state_dict_keys_and_initialization_identical": true
+        },
+        {
+          "dataset": "FingerMovements",
+          "channels": 3,
+          "logit_max_abs_error": 0,
+          "training_loss_abs_error": 0,
+          "gradient_max_abs_error": 0,
+          "state_dict_keys_and_initialization_identical": true
+        },
+        {
+          "dataset": "Heartbeat",
+          "channels": 20,
+          "logit_max_abs_error": 0,
+          "training_loss_abs_error": 0,
+          "gradient_max_abs_error": 0,
+          "state_dict_keys_and_initialization_identical": true
+        },
+        {
+          "dataset": "InsectWingbeat",
+          "channels": 3,
+          "logit_max_abs_error": 0,
+          "training_loss_abs_error": 0,
+          "gradient_max_abs_error": 0,
+          "state_dict_keys_and_initialization_identical": true
+        },
+        {
+          "dataset": "JapaneseVowels",
+          "channels": 20,
+          "logit_max_abs_error": 0,
+          "training_loss_abs_error": 0,
+          "gradient_max_abs_error": 0,
+          "state_dict_keys_and_initialization_identical": true
+        },
+        {
+          "dataset": "NATOPS",
+          "channels": 3,
+          "logit_max_abs_error": 0,
+          "training_loss_abs_error": 0,
+          "gradient_max_abs_error": 0,
+          "state_dict_keys_and_initialization_identical": true
+        },
+        {
+          "dataset": "PEMS-SF",
+          "channels": 20,
+          "logit_max_abs_error": 0,
+          "training_loss_abs_error": 0,
+          "gradient_max_abs_error": 0,
+          "state_dict_keys_and_initialization_identical": true
+        },
+        {
+          "dataset": "PenDigits",
+          "channels": 3,
+          "logit_max_abs_error": 0,
+          "training_loss_abs_error": 0,
+          "gradient_max_abs_error": 0,
+          "state_dict_keys_and_initialization_identical": true
+        },
+        {
+          "dataset": "RacketSports",
+          "channels": 20,
+          "logit_max_abs_error": 0,
+          "training_loss_abs_error": 0,
+          "gradient_max_abs_error": 0,
+          "state_dict_keys_and_initialization_identical": true
+        },
+        {
+          "dataset": "SelfRegulationSCP2",
+          "channels": 3,
+          "logit_max_abs_error": 0,
+          "training_loss_abs_error": 0,
+          "gradient_max_abs_error": 0,
+          "state_dict_keys_and_initialization_identical": true
+        },
+        {
+          "dataset": "SpokenArabicDigits",
+          "channels": 20,
+          "logit_max_abs_error": 0,
+          "training_loss_abs_error": 0,
+          "gradient_max_abs_error": 0,
+          "state_dict_keys_and_initialization_identical": true
+        },
+        {
+          "dataset": "StandWalkJump",
+          "channels": 3,
+          "logit_max_abs_error": 0,
+          "training_loss_abs_error": 0,
+          "gradient_max_abs_error": 0,
+          "state_dict_keys_and_initialization_identical": true
+        },
+        {
+          "dataset": "UWaveGestureLibrary",
+          "channels": 20,
+          "logit_max_abs_error": 0,
+          "training_loss_abs_error": 0,
+          "gradient_max_abs_error": 0,
+          "state_dict_keys_and_initialization_identical": true
+        },
+        {
+          "dataset": "LAMOST",
+          "channels": 3,
+          "logit_max_abs_error": 0,
+          "training_loss_abs_error": 0,
+          "gradient_max_abs_error": 0,
+          "state_dict_keys_and_initialization_identical": true
+        }
+      ],
+      "inputs": "Small random fixtures with variable valid lengths and masked padding. Channels alternate between 3 and 20. These are not real dataset inputs."
+    },
+    "initial_checks_note": "The original tests and legacy_equivalence sections below record the initial release recipes. The configuration_equivalence results in this update cover the newly supplied 18 UEA recipes and LAMOST recipe."
+  },
   "checked_on": "2026-10-18",
   "scope": "Manuscript four-branch full model, UEA data conversion, training and final-only TEST evaluation",
   "environment": {

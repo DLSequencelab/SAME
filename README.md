@@ -203,14 +203,49 @@ with `CUDA_VISIBLE_DEVICES=3` and continue using `--device cuda`.
 For a short environment check, use `--datasets BasicMotions --seeds 42 --epochs 2`
 and a new output directory. This is a smoke test, not a performance experiment.
 
+### LAMOST
+
+The same runner accepts the LAMOST recipe and a preprocessed `LAMOST.npz` with
+the TRAIN/TEST arrays described in Section 3. Preserve the intended wavelength
+order and the preprocessing used to create that NPZ. The UEA `.ts` converter
+does not read astronomical FITS files; no FITS converter or LAMOST data is
+included in this release.
+
+```bash
+python -u train.py \
+  --config configs/lamost.json \
+  --data_root /path/to/preprocessed/lamost_npz \
+  --datasets LAMOST --seeds 42 \
+  --device cuda \
+  --output result/lamost_seed42_final_test
+```
+
+### Dataset configuration files
+
+`configs/uea18.json` contains the 18 UEA dataset recipes;
+`configs/lamost.json` contains the LAMOST recipe. Both were organized from the
+supplied configurations, preserving all supported model and optimization
+hyperparameters, including per-dataset overrides. For example, UEA uses a
+default long-context kernel of 5, whereas LAMOST uses 3. LAMOST retains a
+128-point window, stride 16, batch size 128, learning rate 0.003, and a maximum
+of 100 epochs with patience 100. The latter cannot trigger patience-based
+stopping before the maximum budget under the current stopping rule.
+
 Optional overrides: `--epochs`, `--patience`, `--early_stop_min_delta`, and
 `--num_workers`. Model/training hyperparameters otherwise come from the merged
-default and dataset entries in `configs/uea18.json`.
+default and dataset entries in the selected configuration file.
 
-The supplied 18 dataset recipes preserve the original full model's active
-hyperparameter values. Inactive legacy sparse-routing, orthogonality,
-reliability, ablation, validation-split, and explanation-export options have been
-removed. Unsupported fields raise errors rather than being silently ignored.
+Legacy fields unused by this release were removed: `top_k`, `routing_mode`,
+`orth_weight`, `orth_margin`, `balance_weight`, `anchor_min_mass`,
+`anchor_min_patches`, `reliability_gamma`, `reliability_floor`,
+`reliability_temperature`, and `classification_margin`. The supplied recipes use
+soft composition with zero orthogonality, balance, reliability, and margin
+effects. `split_seed`, `validation_ratio`, and `explain_samples` were also
+removed because this runner neither creates a validation split nor exports
+explanation experiments. The old `paper_test` protocol identifier was replaced
+with `official_train_ce_earlystop_final_test`; training and evaluation follow
+Section 4. Unsupported fields still raise errors rather than being silently
+ignored. These updated recipes require new runs to establish dataset results.
 
 An existing output directory is never overwritten. If `--output` is omitted,
 the runner creates a UTC-timestamped directory under `result/`. Failed runs
@@ -310,6 +345,7 @@ same/
   model.py
 configs/
   uea18.json
+  lamost.json
 tests/
   test_release.py
 train.py
