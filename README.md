@@ -62,7 +62,7 @@ Reference training environment (reported versions):
 | pandas | 2.2.3 |
 | scikit-learn | 1.6.1 |
 
-The dependency files pin the reported package versions. Python, CUDA, and cuDNN
+The requirements file pins the reported package versions. Python, CUDA, and cuDNN
 are environment information, not pip requirements. The CUDA entry identifies the
 PyTorch build, not the installed NVIDIA driver or a separately installed toolkit.
 Release verification checks are documented separately in Section 7.
@@ -73,12 +73,8 @@ python -m pip install -r requirements.txt
 
 If using a CUDA environment, keep or install a PyTorch build matching the target
 machine. The training entry point accepts `--device cpu`, `cuda`, `cuda:0`,
-or `auto`. Install the optional converter dependencies only if starting from
-UEA `.ts` files:
-
-```bash
-python -m pip install -r requirements-convert.txt
-```
+or `auto`. The single requirements file includes dependencies for both model
+training and UEA `.ts` data conversion.
 
 The core training code only requires NumPy and PyTorch; it does not import
 matplotlib, scikit-learn, or sktime. sktime is imported only by the optional
@@ -319,7 +315,6 @@ tests/
 train.py
 convert_uea_ts.py
 requirements.txt
-requirements-convert.txt
 README.md
 verification.json
 ```
