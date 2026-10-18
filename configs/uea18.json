@@ -1,0 +1,273 @@
+{
+  "description": "SAME manuscript model: fixed source-specific transforms and dense branch-temporal additive score composition. Full official TRAIN, TRAIN-CE early stopping, last trained model, one final TEST evaluation.",
+  "defaults": {
+    "model": {
+      "patch_length": 16,
+      "patch_stride": 8,
+      "width": 64,
+      "fft_bands": 4,
+      "fft_width": 32,
+      "evidence_dim": 64,
+      "expert_dim": 32,
+      "router_temperature": 1,
+      "dropout": 0.3,
+      "normalize_input": true,
+      "position_mode": "sinusoidal",
+      "position_scale": 0.1,
+      "classifier_mode": "linear",
+      "cosine_scale": 10,
+      "architecture_version": "ordered_multiscale_v2",
+      "patch_mode": "auto",
+      "joint_channel_threshold": 16,
+      "channel_dim": 16,
+      "short_kernel": 3,
+      "long_kernel": 3,
+      "long_dilations": [
+        1,
+        2,
+        4
+      ],
+      "route_floor": 0.05,
+      "pooling_mix": 0.5,
+      "branch_loss_start": 0.1,
+      "branch_loss_end": 0.02
+    },
+    "training": {
+      "seed": 42,
+      "epochs": 100,
+      "patience": 20,
+      "batch_size": 32,
+      "learning_rate": 0.001,
+      "weight_decay": 0.0001,
+      "num_workers": 0,
+      "protocol": "official_train_ce_earlystop_final_test",
+      "early_stop_min_delta": 0
+    }
+  },
+  "datasets": {
+    "ArticularyWordRecognition": {
+      "model": {
+        "patch_length": 16,
+        "patch_stride": 8,
+        "width": 64,
+        "dropout": 0.2
+      },
+      "training": {
+        "batch_size": 32,
+        "learning_rate": 0.001
+      }
+    },
+    "BasicMotions": {
+      "model": {
+        "patch_length": 16,
+        "patch_stride": 8,
+        "width": 32,
+        "dropout": 0.35
+      },
+      "training": {
+        "batch_size": 16,
+        "learning_rate": 0.0007
+      }
+    },
+    "CharacterTrajectories": {
+      "model": {
+        "patch_length": 16,
+        "patch_stride": 8,
+        "width": 64,
+        "dropout": 0.2
+      },
+      "training": {
+        "batch_size": 32,
+        "learning_rate": 0.001
+      }
+    },
+    "Cricket": {
+      "model": {
+        "patch_length": 32,
+        "patch_stride": 16,
+        "width": 64,
+        "dropout": 0.3
+      },
+      "training": {
+        "batch_size": 16,
+        "learning_rate": 0.0007
+      }
+    },
+    "DuckDuckGeese": {
+      "model": {
+        "patch_length": 16,
+        "patch_stride": 8,
+        "width": 32,
+        "fft_width": 24,
+        "evidence_dim": 32,
+        "expert_dim": 16,
+        "dropout": 0.4
+      },
+      "training": {
+        "batch_size": 8,
+        "learning_rate": 0.0005,
+        "weight_decay": 0.001
+      }
+    },
+    "FaceDetection": {
+      "model": {
+        "patch_length": 16,
+        "patch_stride": 8,
+        "width": 48,
+        "dropout": 0.3
+      },
+      "training": {
+        "batch_size": 32,
+        "learning_rate": 0.0007
+      }
+    },
+    "FingerMovements": {
+      "model": {
+        "patch_length": 16,
+        "patch_stride": 8,
+        "width": 32,
+        "dropout": 0.4
+      },
+      "training": {
+        "batch_size": 16,
+        "learning_rate": 0.0005,
+        "weight_decay": 0.001
+      }
+    },
+    "Heartbeat": {
+      "model": {
+        "patch_length": 32,
+        "patch_stride": 16,
+        "width": 64,
+        "dropout": 0.35
+      },
+      "training": {
+        "batch_size": 16,
+        "learning_rate": 0.0007
+      }
+    },
+    "InsectWingbeat": {
+      "model": {
+        "patch_length": 16,
+        "patch_stride": 8,
+        "width": 64,
+        "dropout": 0.25
+      },
+      "training": {
+        "batch_size": 64,
+        "learning_rate": 0.001
+      }
+    },
+    "JapaneseVowels": {
+      "model": {
+        "patch_length": 12,
+        "patch_stride": 6,
+        "width": 48,
+        "dropout": 0.25
+      },
+      "training": {
+        "batch_size": 64,
+        "learning_rate": 0.001
+      }
+    },
+    "NATOPS": {
+      "model": {
+        "patch_length": 16,
+        "patch_stride": 8,
+        "width": 64,
+        "dropout": 0.2
+      },
+      "training": {
+        "batch_size": 32,
+        "learning_rate": 0.001
+      }
+    },
+    "PEMS-SF": {
+      "model": {
+        "patch_length": 16,
+        "patch_stride": 8,
+        "width": 64,
+        "dropout": 0.4
+      },
+      "training": {
+        "batch_size": 8,
+        "learning_rate": 0.0005,
+        "weight_decay": 0.001
+      }
+    },
+    "PenDigits": {
+      "model": {
+        "patch_length": 9,
+        "patch_stride": 4,
+        "width": 32,
+        "fft_bands": 4,
+        "dropout": 0.2
+      },
+      "training": {
+        "batch_size": 64,
+        "learning_rate": 0.001
+      }
+    },
+    "RacketSports": {
+      "model": {
+        "patch_length": 12,
+        "patch_stride": 6,
+        "width": 48,
+        "dropout": 0.3
+      },
+      "training": {
+        "batch_size": 32,
+        "learning_rate": 0.0007
+      }
+    },
+    "SelfRegulationSCP2": {
+      "model": {
+        "patch_length": 32,
+        "patch_stride": 16,
+        "width": 64,
+        "dropout": 0.35
+      },
+      "training": {
+        "batch_size": 16,
+        "learning_rate": 0.0007
+      }
+    },
+    "SpokenArabicDigits": {
+      "model": {
+        "patch_length": 16,
+        "patch_stride": 8,
+        "width": 64,
+        "dropout": 0.25
+      },
+      "training": {
+        "batch_size": 64,
+        "learning_rate": 0.001
+      }
+    },
+    "StandWalkJump": {
+      "model": {
+        "patch_length": 32,
+        "patch_stride": 16,
+        "width": 32,
+        "dropout": 0.4
+      },
+      "training": {
+        "batch_size": 4,
+        "learning_rate": 0.0005,
+        "weight_decay": 0.001
+      }
+    },
+    "UWaveGestureLibrary": {
+      "model": {
+        "patch_length": 16,
+        "patch_stride": 8,
+        "width": 48,
+        "dropout": 0.25
+      },
+      "training": {
+        "batch_size": 32,
+        "learning_rate": 0.001
+      }
+    }
+  }
+}
