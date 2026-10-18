@@ -101,6 +101,23 @@ class ModelTests(unittest.TestCase):
             self.assertGreater(sum(p.numel() for p in SAME(config).parameters()), 0)
 
 
+    def test_lamost_model_recipe(self):
+        recipes = runner.read_json(Path(__file__).resolve().parents[1] / "configs/lamost.json")
+        self.assertEqual(list(recipes["datasets"]), ["LAMOST"])
+        model_recipe, training = runner.resolve_recipe(recipes, "LAMOST", 42, SimpleNamespace())
+        config = SAMEConfig(**model_recipe, channels=1, classes=8)
+        self.assertEqual((config.patch_length, config.patch_stride), (128, 16))
+        self.assertFalse(config.normalize_input)
+        self.assertEqual(training["protocol"], runner.PROTOCOL)
+        self.assertEqual((training["epochs"], training["patience"]), (100, 100))
+        model = SAME(config).eval()
+        with torch.no_grad():
+            logits, aux = model(torch.randn(2, 257, 1), return_aux=True)
+        self.assertEqual(tuple(logits.shape), (2, 8))
+        self.assertTrue(torch.isfinite(logits).all())
+        torch.testing.assert_close(logits, aux["signed_contributions"].sum((1, 2)), rtol=0, atol=0)
+
+
 class TrainingTests(unittest.TestCase):
     def make_data(self, folder):
         rng = np.random.default_rng(7)
