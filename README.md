@@ -48,6 +48,25 @@ temperature, and `route_floor` is its uniform-mixture coefficient.
 
 Python 3.10 or newer and a working PyTorch installation are required.
 
+Reference training environment (reported versions):
+
+| Component | Version |
+| --- | --- |
+| Python | 3.10.16 |
+| PyTorch | 2.5.1+cu121 |
+| CUDA (PyTorch build) | 12.1 |
+| cuDNN | 9.1.0 |
+| NumPy | 1.26.4 |
+| sktime | 1.1.0 |
+| SciPy | 1.15.3 |
+| pandas | 2.2.3 |
+| scikit-learn | 1.6.1 |
+
+The dependency files pin the reported package versions. Python, CUDA, and cuDNN
+are environment information, not pip requirements. The CUDA entry identifies the
+PyTorch build, not the installed NVIDIA driver or a separately installed toolkit.
+Release verification checks are documented separately in Section 7.
+
 ```bash
 python -m pip install -r requirements.txt
 ```
