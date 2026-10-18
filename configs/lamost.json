@@ -1,0 +1,43 @@
+{
+  "description": "SAME LAMOST recipe, organized from the supplied configuration. Fixed source-specific transforms and dense branch-temporal score composition. Full provided TRAIN, TRAIN-CE early stopping, last trained model, one final TEST evaluation.",
+  "defaults": {
+    "model": {
+      "architecture_version": "ordered_multiscale_v2",
+      "patch_length": 128,
+      "patch_stride": 16,
+      "width": 64,
+      "evidence_dim": 64,
+      "expert_dim": 32,
+      "dropout": 0.25,
+      "normalize_input": false,
+      "short_kernel": 3,
+      "long_kernel": 3,
+      "long_dilations": [
+        1,
+        2,
+        4
+      ],
+      "fft_bands": 4,
+      "fft_width": 32,
+      "route_floor": 0.05,
+      "classifier_mode": "linear"
+    },
+    "training": {
+      "protocol": "official_train_ce_earlystop_final_test",
+      "seed": 42,
+      "epochs": 100,
+      "patience": 100,
+      "batch_size": 128,
+      "learning_rate": 0.003,
+      "weight_decay": 0.001,
+      "num_workers": 0,
+      "early_stop_min_delta": 0
+    }
+  },
+  "datasets": {
+    "LAMOST": {
+      "model": {},
+      "training": {}
+    }
+  }
+}

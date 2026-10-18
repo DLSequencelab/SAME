@@ -1,5 +1,5 @@
 {
-  "description": "SAME manuscript model: fixed source-specific transforms and dense branch-temporal additive score composition. Full official TRAIN, TRAIN-CE early stopping, last trained model, one final TEST evaluation.",
+  "description": "SAME 18-dataset UEA recipe, organized from the supplied configuration. Fixed source-specific transforms and dense branch-temporal score composition. Full provided TRAIN, TRAIN-CE early stopping, last trained model, one final TEST evaluation.",
   "defaults": {
     "model": {
       "patch_length": 16,
@@ -21,7 +21,7 @@
       "joint_channel_threshold": 16,
       "channel_dim": 16,
       "short_kernel": 3,
-      "long_kernel": 3,
+      "long_kernel": 5,
       "long_dilations": [
         1,
         2,
@@ -33,6 +33,7 @@
       "branch_loss_end": 0.02
     },
     "training": {
+      "protocol": "official_train_ce_earlystop_final_test",
       "seed": 42,
       "epochs": 100,
       "patience": 20,
@@ -40,7 +41,6 @@
       "learning_rate": 0.001,
       "weight_decay": 0.0001,
       "num_workers": 0,
-      "protocol": "official_train_ce_earlystop_final_test",
       "early_stop_min_delta": 0
     }
   },
@@ -48,33 +48,47 @@
     "ArticularyWordRecognition": {
       "model": {
         "patch_length": 16,
-        "patch_stride": 8,
+        "patch_stride": 10,
+        "classifier_mode": "cosine",
+        "normalize_input": false,
+        "fft_bands": 8,
+        "fft_width": 32,
+        "cosine_scale": 10,
         "width": 64,
-        "dropout": 0.2
+        "dropout": 0.25
       },
       "training": {
         "batch_size": 32,
-        "learning_rate": 0.001
+        "learning_rate": 0.002,
+        "weight_decay": 0.001
       }
     },
     "BasicMotions": {
       "model": {
-        "patch_length": 16,
-        "patch_stride": 8,
+        "patch_length": 12,
+        "patch_stride": 2,
+        "fft_bands": 4,
+        "fft_width": 32,
         "width": 32,
         "dropout": 0.35
       },
       "training": {
         "batch_size": 16,
-        "learning_rate": 0.0007
+        "learning_rate": 0.0008
       }
     },
     "CharacterTrajectories": {
       "model": {
         "patch_length": 16,
         "patch_stride": 8,
-        "width": 64,
-        "dropout": 0.2
+        "width": 96,
+        "evidence_dim": 64,
+        "dropout": 0.2,
+        "classifier_mode": "cosine",
+        "normalize_input": false,
+        "cosine_scale": 10,
+        "branch_loss_start": 0.1,
+        "branch_loss_end": 0.02
       },
       "training": {
         "batch_size": 32,
@@ -86,82 +100,128 @@
         "patch_length": 32,
         "patch_stride": 16,
         "width": 64,
-        "dropout": 0.3
+        "classifier_mode": "cosine",
+        "normalize_input": false,
+        "cosine_scale": 8,
+        "fft_bands": 2,
+        "fft_width": 10,
+        "evidence_dim": 64,
+        "dropout": 0.2
       },
       "training": {
         "batch_size": 16,
-        "learning_rate": 0.0007
+        "learning_rate": 0.005,
+        "weight_decay": 0.001
       }
     },
     "DuckDuckGeese": {
       "model": {
-        "patch_length": 16,
-        "patch_stride": 8,
+        "patch_length": 12,
+        "patch_stride": 6,
         "width": 32,
-        "fft_width": 24,
+        "fft_bands": 4,
+        "fft_width": 16,
+        "classifier_mode": "cosine",
+        "normalize_input": false,
+        "cosine_scale": 8,
         "evidence_dim": 32,
         "expert_dim": 16,
         "dropout": 0.4
       },
       "training": {
         "batch_size": 8,
-        "learning_rate": 0.0005,
+        "learning_rate": 0.0003,
         "weight_decay": 0.001
       }
     },
     "FaceDetection": {
       "model": {
-        "patch_length": 16,
+        "patch_length": 24,
         "patch_stride": 8,
-        "width": 48,
-        "dropout": 0.3
+        "fft_bands": 4,
+        "fft_width": 16,
+        "classifier_mode": "cosine",
+        "normalize_input": false,
+        "cosine_scale": 10,
+        "width": 32,
+        "dropout": 0.7
       },
       "training": {
-        "batch_size": 32,
-        "learning_rate": 0.0007
+        "batch_size": 256,
+        "learning_rate": 0.005
       }
     },
     "FingerMovements": {
       "model": {
-        "patch_length": 16,
-        "patch_stride": 8,
-        "width": 32,
-        "dropout": 0.4
+        "patch_length": 48,
+        "patch_stride": 22,
+        "patch_mode": "auto",
+        "channel_dim": 64,
+        "width": 64,
+        "evidence_dim": 64,
+        "expert_dim": 16,
+        "fft_bands": 12,
+        "fft_width": 24,
+        "classifier_mode": "cosine",
+        "normalize_input": false,
+        "cosine_scale": 10,
+        "dropout": 0.3
       },
       "training": {
-        "batch_size": 16,
-        "learning_rate": 0.0005,
-        "weight_decay": 0.001
+        "batch_size": 32,
+        "learning_rate": 0.005,
+        "weight_decay": 0.0005
       }
     },
     "Heartbeat": {
       "model": {
-        "patch_length": 32,
-        "patch_stride": 16,
+        "patch_length": 16,
+        "patch_stride": 8,
+        "patch_mode": "auto",
+        "channel_dim": 48,
         "width": 64,
+        "evidence_dim": 64,
+        "expert_dim": 32,
+        "fft_bands": 8,
+        "fft_width": 32,
+        "short_kernel": 3,
+        "long_kernel": 5,
+        "long_dilations": [
+          1,
+          2,
+          4
+        ],
+        "classifier_mode": "cosine",
+        "cosine_scale": 10,
+        "normalize_input": false,
         "dropout": 0.35
       },
       "training": {
         "batch_size": 16,
-        "learning_rate": 0.0007
+        "learning_rate": 0.0007,
+        "weight_decay": 0.001
       }
     },
     "InsectWingbeat": {
       "model": {
-        "patch_length": 16,
+        "patch_length": 15,
         "patch_stride": 8,
         "width": 64,
+        "normalize_input": false,
         "dropout": 0.25
       },
       "training": {
-        "batch_size": 64,
-        "learning_rate": 0.001
+        "batch_size": 256,
+        "learning_rate": 0.002
       }
     },
     "JapaneseVowels": {
       "model": {
         "patch_length": 12,
         "patch_stride": 6,
+        "classifier_mode": "cosine",
+        "normalize_input": false,
+        "cosine_scale": 10,
         "width": 48,
         "dropout": 0.25
       },
@@ -172,100 +232,143 @@
     },
     "NATOPS": {
       "model": {
-        "patch_length": 16,
-        "patch_stride": 8,
+        "patch_length": 4,
+        "patch_stride": 2,
+        "fft_bands": 2,
+        "fft_width": 8,
+        "classifier_mode": "cosine",
+        "normalize_input": false,
+        "cosine_scale": 8,
+        "short_kernel": 3,
+        "long_kernel": 5,
         "width": 64,
-        "dropout": 0.2
+        "dropout": 0.3
       },
       "training": {
-        "batch_size": 32,
-        "learning_rate": 0.001
+        "batch_size": 16,
+        "learning_rate": 0.008
       }
     },
     "PEMS-SF": {
       "model": {
-        "patch_length": 16,
-        "patch_stride": 8,
+        "patch_length": 6,
+        "patch_stride": 4,
+        "fft_bands": 2,
+        "fft_width": 8,
+        "classifier_mode": "cosine",
+        "normalize_input": false,
+        "cosine_scale": 10,
+        "channel_dim": 16,
+        "short_kernel": 3,
+        "long_kernel": 5,
         "width": 64,
-        "dropout": 0.4
+        "dropout": 0.3
       },
       "training": {
         "batch_size": 8,
-        "learning_rate": 0.0005,
+        "learning_rate": 0.0004,
         "weight_decay": 0.001
       }
     },
     "PenDigits": {
       "model": {
-        "patch_length": 9,
-        "patch_stride": 4,
+        "patch_length": 2,
+        "patch_stride": 1,
+        "fft_bands": 1,
+        "fft_width": 4,
+        "short_kernel": 3,
+        "long_kernel": 5,
         "width": 32,
-        "fft_bands": 4,
         "dropout": 0.2
       },
       "training": {
-        "batch_size": 64,
-        "learning_rate": 0.001
+        "batch_size": 256,
+        "learning_rate": 0.01,
+        "weight_decay": 0.001
       }
     },
     "RacketSports": {
       "model": {
-        "patch_length": 12,
-        "patch_stride": 6,
+        "patch_length": 5,
+        "patch_stride": 1,
+        "classifier_mode": "cosine",
+        "normalize_input": false,
+        "cosine_scale": 10,
+        "fft_bands": 2,
+        "fft_width": 8,
+        "short_kernel": 3,
+        "long_kernel": 5,
         "width": 48,
-        "dropout": 0.3
+        "dropout": 0.2
       },
       "training": {
         "batch_size": 32,
-        "learning_rate": 0.0007
+        "learning_rate": 0.02,
+        "weight_decay": 0.0004
       }
     },
     "SelfRegulationSCP2": {
       "model": {
-        "patch_length": 32,
-        "patch_stride": 16,
+        "patch_length": 128,
+        "patch_stride": 32,
+        "classifier_mode": "cosine",
+        "normalize_input": false,
+        "cosine_scale": 10,
+        "fft_bands": 4,
+        "fft_width": 12,
+        "pooling_mix": 0.5,
+        "short_kernel": 3,
+        "long_kernel": 5,
         "width": 64,
         "dropout": 0.35
       },
       "training": {
         "batch_size": 16,
-        "learning_rate": 0.0007
+        "learning_rate": 0.0008
       }
     },
     "SpokenArabicDigits": {
       "model": {
-        "patch_length": 16,
-        "patch_stride": 8,
+        "patch_length": 8,
+        "patch_stride": 2,
         "width": 64,
         "dropout": 0.25
       },
       "training": {
-        "batch_size": 64,
-        "learning_rate": 0.001
+        "batch_size": 256,
+        "learning_rate": 0.02
       }
     },
     "StandWalkJump": {
       "model": {
-        "patch_length": 32,
+        "patch_length": 128,
         "patch_stride": 16,
         "width": 32,
-        "dropout": 0.4
+        "dropout": 0.35
       },
       "training": {
         "batch_size": 4,
         "learning_rate": 0.0005,
-        "weight_decay": 0.001
+        "weight_decay": 0.0001
       }
     },
     "UWaveGestureLibrary": {
       "model": {
         "patch_length": 16,
-        "patch_stride": 8,
+        "patch_stride": 12,
+        "classifier_mode": "cosine",
+        "normalize_input": false,
+        "fft_bands": 4,
+        "fft_width": 32,
+        "pooling_mix": 0.25,
+        "short_kernel": 3,
+        "long_kernel": 5,
+        "cosine_scale": 10,
         "width": 48,
         "dropout": 0.25
       },
       "training": {
-        "batch_size": 32,
+        "batch_size": 24,
         "learning_rate": 0.001
       }
     }
